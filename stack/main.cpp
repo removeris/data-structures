@@ -69,14 +69,14 @@ int main() {
 
     stack.push(8);
     stack.push(5);
-
     stack.peek();
 
     stack.pop();
-    
     stack.peek();
 
-    std::cout << stack.isEmpty() << "\n";
+    stack.pop();
+
+    std::cout << stack.isEmpty() << "isempty\n";
 
     stack.push(2);
     stack.push(8);
