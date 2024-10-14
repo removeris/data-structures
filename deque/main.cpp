@@ -111,14 +111,15 @@ class Deque {
         bool isFull() {
             return (front == 0 && rear == MAX_SIZE - 1) || (front == rear + 1);
         }
-};
 
-void dequeDisplay(Deque &deque) {
-    int temp = deque.getFront();
-    deque.popFront();
-    deque.pushBack(temp);
-    std::cout << temp << " ";
-}
+        void display(Deque deque) {
+            while(!deque.isEmpty()) {
+                std::cout << deque.getRear() << " ";
+                deque.popBack();
+            }
+            std::cout << "\n";
+        }
+};
 
 int main() {
     Deque deque;
@@ -128,19 +129,15 @@ int main() {
     deque.pushBack(7);
     deque.pushBack(9);
     deque.pushFront(2);
+    deque.pushBack(7);
+    deque.pushFront(41);
 
-    for(int i = 0; i < 5; i++){
-        dequeDisplay(deque);
-    }
-
-    std::cout << "\n";
+    deque.display(deque);
 
     deque.popFront();
     deque.popBack();
 
-    for(int i = 0; i < 3; i++){
-        dequeDisplay(deque);
-    }
+    deque.display(deque);
 
 
     return 0;
