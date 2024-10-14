@@ -66,36 +66,30 @@ class Queue {
         bool isFull() {
             return (this->back == MAX_SIZE - 1 && this->front != 0);
         }
-};
 
-void fullDisplay(Queue queue){
-    std::cout << "Empty? " << queue.isEmpty() << "\n";
-    std::cout << "Full? " << queue.isFull() << "\n";
-    std::cout << "Front:";
-    queue.frontDisplay();
-    std::cout << "Back:";
-    queue.backDisplay();
-    std::cout << "\n";
-}
+        void display(Queue queue) {
+            while(!queue.isEmpty()) {
+                queue.frontDisplay();
+                queue.dequeue();
+            }
+        }
+};
 
 int main() {
     Queue queue;
 
     queue.enqueue(4);
-    fullDisplay(queue);
 
     queue.enqueue(7);
     queue.enqueue(8);
     queue.enqueue(-3);
-    fullDisplay(queue);
+    queue.display(queue);
 
     queue.dequeue();
-    fullDisplay(queue);
 
     queue.dequeue();
     queue.dequeue();
     queue.dequeue();
-    fullDisplay(queue);
 
     return 0;
 }
