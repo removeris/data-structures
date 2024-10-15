@@ -141,8 +141,14 @@ class circularLinkedList
 						travelling_ptr = travelling_ptr->next;
 					}
 
+					if(travelling_ptr == tail->next){
+						deleteNodeStart();
+						return;
+					}
+
 					node* temp = travelling_ptr->next;
 					if(temp == tail){
+						travelling_ptr->next = tail->next;
 						tail = travelling_ptr;
 						delete temp;
 					}
@@ -211,5 +217,11 @@ int main()
 	listas.addNodeEnd(5);
 	listas.display();
 	listas.search(5);
+	listas.addNodePos(5, 9);
+	listas.display();
+	listas.deleteNodeEnd();
+	listas.display();
+	listas.deleteNodePos(1);
+	listas.display();
     return 0;
 }
