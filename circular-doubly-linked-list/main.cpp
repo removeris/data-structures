@@ -16,7 +16,9 @@ class CircularDoublyLinkedList {
             size = 0;
         }
         ~CircularDoublyLinkedList() {
-
+            while(!isEmpty()){
+                deleteNodeStart();
+            }
         }
 
         void addNodeStart(int value) {
@@ -152,7 +154,24 @@ class CircularDoublyLinkedList {
         }
 
         void deleteNodeEnd() {
+            if(isEmpty()) {
+                std::cout << "Circular doubly linked list is empty!\n";
+                return;
+            }
+            else if(tail->next == tail) {
+                delete tail;
+                tail = nullptr;
+            }
+            else {
+                Node* temp = tail;
+                
+                tail->prev->next = tail->next;
+                tail->next->prev = tail->prev;
 
+                tail = tail->prev;
+
+                delete temp;
+            }
         }
 
         void display() {
@@ -161,26 +180,42 @@ class CircularDoublyLinkedList {
                 return;
             }   
             Node* travelling_pointer = tail->next;
-            int n = 1;
-
-            while(travelling_pointer != tail){
-                n++;
-                travelling_pointer = travelling_pointer->next;
-            }
-
-            travelling_pointer = tail->next;
 
             std::cout << "List: ";
-            for(int i = 0; i < n; i++){
+            while(travelling_pointer != tail){
                 std::cout << travelling_pointer->data << " ";
                 travelling_pointer = travelling_pointer->next;
             }
 
-            std::cout << "\n";
+            std::cout << travelling_pointer->data << "\n";
         }
 
         bool isEmpty() {
             return tail == nullptr;
+        }
+
+        void search(int value) {
+            if(isEmpty()){
+                std::cout << "Circular doubly linked list is empty!\n";
+                return;
+            }   
+
+            Node* travelling_pointer = tail->next;
+            int index = 1;
+
+            std::cout << "Value " << value << " can be found at index(-es): ";
+            while(travelling_pointer != tail){
+                if(travelling_pointer->data == value){
+                    std:: cout << index << "";
+                }
+                travelling_pointer = travelling_pointer->next;
+                index++;
+            }
+            if(travelling_pointer->data == value){
+                std::cout << index << "\n";
+                return;
+            }
+            std::cout << "\n";
         }
 };
 
@@ -197,7 +232,11 @@ int main() {
 
     list.deleteNodeStart();
 
+    list.deleteNodeEnd();
+
     list.display();
+
+    list.search(7);
 
     return 0;
 }
