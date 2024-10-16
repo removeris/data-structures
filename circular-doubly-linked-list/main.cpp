@@ -36,7 +36,38 @@ class CircularDoublyLinkedList {
         }
 
         void addNodePosition(int value, int idx) {
+            Node* new_node = new Node;
+            new_node->data = value;
             
+            Node* travelling_ptr;
+
+            while(idx > size) {
+                idx -= size;
+            }
+            if(isEmpty()) {
+                new_node->next = new_node;
+                new_node->prev = new_node;
+                tail = new_node;
+                return;
+            }
+            else if(size - idx < idx) {
+                travelling_ptr = tail->prev;
+
+                for(int i = size - idx; i > 1; i--){
+                    travelling_ptr = travelling_ptr->prev;
+                }
+            }
+            else {
+                travelling_ptr = tail->next;
+
+                for(int i = 1; i < idx; i++) {
+                    travelling_ptr = travelling_ptr->next;
+                }
+            }
+
+            travelling_ptr->prev->next = new_node;
+            new_node->next = travelling_ptr;
+            travelling_ptr->prev = new_node;
         }
 
         void addNodeEnd(int value) {
@@ -59,7 +90,23 @@ class CircularDoublyLinkedList {
         }
 
         void deleteNodeStart() {
-            
+            if(isEmpty()) {
+                std::cout << "Circular doubly linked list is empty!\n";
+                return;
+            }
+            // 1 elem
+            else if(tail->next == tail) {
+                delete tail;
+                tail = nullptr;
+            }
+            else {
+                Node* temp = tail->next;
+
+                temp->next->prev = tail;
+                tail->next = tail->next->next;
+
+                delete temp;
+            }
         }
 
         void deleteNodePosition(int idx) {
@@ -146,14 +193,9 @@ int main() {
     list.addNodeEnd(7);
     list.addNodeEnd(9);
     list.addNodeEnd(11);
+    list.addNodePosition(86, 7);
 
-    for(int i = 0; i < 50; i++){
-        list.addNodeEnd(i);
-    }
-
-    list.deleteNodePosition(40);
-    
-    list.addNodeEnd(1);
+    list.deleteNodeStart();
 
     list.display();
 
