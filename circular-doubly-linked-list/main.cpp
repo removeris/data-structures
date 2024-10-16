@@ -21,7 +21,18 @@ class CircularDoublyLinkedList {
 
         void addNodeStart(int value) {
             Node* new_node = new Node;
+            new_node->data = value;
 
+            if(isEmpty()) {
+                new_node->prev = new_node;
+                new_node->next = new_node;
+                tail = new_node;
+            }
+            else {
+                new_node->prev = tail;
+                new_node->next = tail->next;
+                tail->next = new_node;
+            }
         }
 
         void addNodePosition(int value, int idx) {
